@@ -50,7 +50,7 @@ class MiniMaxProviderTests(unittest.TestCase):
             llm, use_vision = create_llm(config)
 
         self.assertIs(llm, chat_anthropic.return_value)
-        self.assertFalse(use_vision)
+        self.assertTrue(use_vision)
         self.assertEqual(
             chat_anthropic.call_args.kwargs["base_url"],
             "https://api.minimaxi.com/anthropic",
@@ -78,7 +78,7 @@ class MiniMaxProviderTests(unittest.TestCase):
         chat_anthropic.assert_not_called()
 
     @patch("api.providers.ChatOpenAI")
-    def test_m3_is_text_only(self, chat_openai):
+    def test_m3_supports_vision(self, chat_openai):
         config = ModelConfig(
             provider=ModelProvider.MINIMAX,
             model_name="MiniMax-M3",
@@ -89,7 +89,7 @@ class MiniMaxProviderTests(unittest.TestCase):
             llm, use_vision = create_llm(config)
 
         self.assertIs(llm, chat_openai.return_value)
-        self.assertFalse(use_vision)
+        self.assertTrue(use_vision)
 
 
 if __name__ == "__main__":
