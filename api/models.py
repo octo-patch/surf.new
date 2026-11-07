@@ -94,7 +94,7 @@ class ModelConfig:
             ModelProvider.ANTHROPIC_COMPUTER_USE: "claude-3-5-sonnet-20241022",
             ModelProvider.GEMINI: "gemini-2.0-flash",
             ModelProvider.DEEPSEEK: "deepseek-chat",
-            ModelProvider.MINIMAX: "MiniMax-M3",
+            ModelProvider.MINIMAX: "MiniMax-M3.1-Flash",
             ModelProvider.OLLAMA: "llama3.3",
         }
         return default_models.get(provider) or ValueError("Unsupported provider.")

@@ -119,8 +119,8 @@ AGENT_CONFIGS = {
             {
                 "provider": ModelProvider.MINIMAX.value,
                 "models": [
+                    "MiniMax-M3.1-Flash",
                     "MiniMax-M3",
-                    "MiniMax-M2.7",
                 ],
             },
             {

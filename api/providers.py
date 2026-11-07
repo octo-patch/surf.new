@@ -128,9 +128,9 @@ def create_llm(config: ModelConfig) -> tuple[BaseChatModel | Client, bool]:
         ), False
     elif config.provider == ModelProvider.MINIMAX:
         api_key = config.api_key or os.getenv("MINIMAX_API_KEY", "")
-        model_name = config.model_name or "MiniMax-M3"
+        model_name = config.model_name or "MiniMax-M3.1-Flash"
         api_format = os.getenv("MINIMAX_API_FORMAT", "openai").lower()
-        use_vision = model_name == "MiniMax-M3"
+        use_vision = model_name == "MiniMax-M3.1-Flash"
 
         base_urls = {
             "openai": "https://api.minimax.io/v1",

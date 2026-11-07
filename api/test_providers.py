@@ -7,11 +7,17 @@ from api.providers import create_llm
 
 
 class MiniMaxProviderTests(unittest.TestCase):
+    def test_default_model_is_flash(self):
+        self.assertEqual(
+            ModelConfig.default_model(ModelProvider.MINIMAX),
+            "MiniMax-M3.1-Flash",
+        )
+
     @patch("api.providers.ChatOpenAI")
     def test_openai_defaults_to_global_endpoint(self, chat_openai):
         config = ModelConfig(
             provider=ModelProvider.MINIMAX,
-            model_name="MiniMax-M3",
+            model_name="MiniMax-M3.1-Flash",
             api_key="placeholder",
         )
 
@@ -29,7 +35,7 @@ class MiniMaxProviderTests(unittest.TestCase):
     def test_anthropic_accepts_sdk_base_url(self, chat_anthropic):
         config = ModelConfig(
             provider=ModelProvider.MINIMAX,
-            model_name="MiniMax-M2.7",
+            model_name="MiniMax-M3",
             api_key="placeholder",
         )
 
@@ -70,6 +76,20 @@ class MiniMaxProviderTests(unittest.TestCase):
                 create_llm(config)
 
         chat_anthropic.assert_not_called()
+
+    @patch("api.providers.ChatOpenAI")
+    def test_m3_is_text_only(self, chat_openai):
+        config = ModelConfig(
+            provider=ModelProvider.MINIMAX,
+            model_name="MiniMax-M3",
+            api_key="placeholder",
+        )
+
+        with patch.dict(os.environ, {}, clear=True):
+            llm, use_vision = create_llm(config)
+
+        self.assertIs(llm, chat_openai.return_value)
+        self.assertFalse(use_vision)
 
 
 if __name__ == "__main__":
